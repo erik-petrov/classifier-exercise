@@ -9,16 +9,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "classification")
+@Table(name = "score")
 public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @ManyToOne
-    @JoinColumn(name = "document_id")
+    @JoinColumn(name = "document_id", nullable = false)
     Document document;
+
     @ManyToOne
-    @JoinColumn(name = "classification_id")
+    @JoinColumn(name = "classification_id", nullable = false)
     Classification classification;
+
+    @Column(name="score", nullable = false)
     double score;
 }
