@@ -7,16 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class ScoreRepo {
     private final Map<Integer, Score> scores = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger(0);
 
-    public List<Score> findAll(){
-        return List.copyOf(scores.values());
-    }
 
     public Score save(Score sc) {
         if(sc.getId() == 0){
@@ -25,17 +21,17 @@ public class ScoreRepo {
         return scores.put(sc.getId(), sc);
     }
 
-    public Score update(Score sc, int id) {
-        return scores.put(id, sc);
-    }
+    public void updateScores(List<Score> oldList, List<Score> newList){
+        for(Score sc : oldList){
+            if(sc.getId() == 0) {               //if new
+                sc.setId(id.incrementAndGet());
+                scores.put(sc.getId(), sc);
+            }else if(newList.contains(sc)){     //if existing
+                scores.put(sc.getId(), sc);
+            }else{                              //else -> deleted
+                scores.remove(sc.getId());
+            }
+        }
 
-    public Score findById(int id) {
-        return scores.get(id);
-    }
-
-    public List<Score> findByDocumentId(int docId) {
-        return scores.values().stream()
-                .filter(sc -> sc.getDocument().getId()== docId)
-                .collect(Collectors.toList());
     }
 }

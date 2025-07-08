@@ -43,7 +43,7 @@ public class ScoreService {
         DocumentDTO dto = new DocumentDTO(doc);
         dto.setId(doc.getId());
         dto.setClassifications(
-            scoreRepo.findByDocumentId(doc.getId()).stream()
+            doc.getScores().stream()
                     .map(ScoreDTO::new)
                     .collect(Collectors.toList())
         );

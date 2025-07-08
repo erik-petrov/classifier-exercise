@@ -37,7 +37,7 @@ class ClassifierExerciseApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()", greaterThan(0)))
-                .andExpect(jsonPath("$[0].document_name", is("Clinical Summary")));
+                .andExpect(jsonPath("$[4].document_name", is("Contract Draft")));
     }
 
     @Test

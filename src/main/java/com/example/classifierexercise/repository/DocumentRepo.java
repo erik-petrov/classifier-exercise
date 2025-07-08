@@ -14,6 +14,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DocumentRepo {
     private final Map<Integer, Document> docs = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger(0);
+    private final ScoreRepo scoreRepo;
+
+    public DocumentRepo(ScoreRepo scoreRepo) {
+        this.scoreRepo = scoreRepo;
+    }
 
     public Document save(Document doc){
         if(doc.getId() == 0){
@@ -31,6 +36,7 @@ public class DocumentRepo {
         Document oldDoc = docs.get(id);
         oldDoc.setName(document.getName() != null ? document.getName() : oldDoc.getName());
         oldDoc.setScores(document.getScores() != null ? document.getScores() : oldDoc.getScores());
+        scoreRepo.updateScores(oldDoc.getScores(), document.getScores());
         docs.put(id, oldDoc);
     }
 
