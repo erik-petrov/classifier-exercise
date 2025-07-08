@@ -1,6 +1,7 @@
 package com.example.classifierexercise.controller;
 
 import com.example.classifierexercise.entity.Score;
+import com.example.classifierexercise.entity.DocumentDTO;
 import com.example.classifierexercise.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,15 +16,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class ScoreController {
-    private final ScoreService classifierService;
+    private final ScoreService scoreService;
 
     /**
      * GET request which to return all Classifiers from the DB
      * @return All classifiers
      */
     @GetMapping("/classifications")
-    public ResponseEntity<List<Score>> getAllClassifiers(){
-        return ResponseEntity.ok().body(classifierService.getAllScores());
+    public ResponseEntity<List<DocumentDTO>> getAllClassifiers(){
+        return ResponseEntity.ok().body(scoreService.getAllScores());
     }
 
     /**
@@ -35,7 +36,7 @@ public class ScoreController {
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Boolean> submitClassifier(@RequestBody Score cl){
-        return ResponseEntity.ok().body(classifierService.putScore(cl));
+        return ResponseEntity.ok().body(scoreService.putScore(cl));
     }
 
     /**
@@ -44,6 +45,6 @@ public class ScoreController {
      */
     @PatchMapping("/classifications/{id}")
     public ResponseEntity<Boolean> updateClassifier(@PathVariable Integer id, @RequestBody Score cl){
-        return ResponseEntity.ok().body(classifierService.updateScore(cl ,id));
+        return ResponseEntity.ok().body(scoreService.updateScore(cl ,id));
     }
 }

@@ -18,15 +18,15 @@ public class ScoreRepo {
         return List.copyOf(scores.values());
     }
 
-    public void save(Score sc) {
+    public Score save(Score sc) {
         if(sc.getId() == 0){
             sc.setId(id.incrementAndGet());
         }
-        scores.put(sc.getId(), sc);
+        return scores.put(sc.getId(), sc);
     }
 
-    public void update(Score sc, int id) {
-        scores.put(id, sc);
+    public Score update(Score sc, int id) {
+        return scores.put(id, sc);
     }
 
     public Score findById(int id) {
@@ -35,7 +35,7 @@ public class ScoreRepo {
 
     public List<Score> findByDocumentId(int docId) {
         return scores.values().stream()
-                .filter(sc -> sc.getDocument().getId() == docId)
+                .filter(sc -> sc.getDocument().getId()== docId)
                 .collect(Collectors.toList());
     }
 }
