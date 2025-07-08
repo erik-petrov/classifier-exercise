@@ -1,12 +1,10 @@
 package com.example.classifierexercise.repository;
 
 import com.example.classifierexercise.entity.Document;
+import com.example.classifierexercise.entity.DocumentDTO;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,9 +13,11 @@ public class DocumentRepo {
     private final Map<Integer, Document> docs = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger(0);
     private final ScoreRepo scoreRepo;
+    private final ClassificationRepo classificationRepo;
 
-    public DocumentRepo(ScoreRepo scoreRepo) {
+    public DocumentRepo(ScoreRepo scoreRepo, ClassificationRepo classificationRepo) {
         this.scoreRepo = scoreRepo;
+        this.classificationRepo = classificationRepo;
     }
 
     public Document save(Document doc){
@@ -46,5 +46,15 @@ public class DocumentRepo {
 
     public Optional<Document> findByName(String name){
         return docs.values().stream().filter(d -> d.getName().equals(name)).findFirst();
+    }
+
+    public boolean changeDocumentSelection(Document doc, String label) {
+        try{
+            doc.setChosenClassificationId(label);
+        }catch (Exception e){
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return false;
+        }
+        return true;
     }
 }

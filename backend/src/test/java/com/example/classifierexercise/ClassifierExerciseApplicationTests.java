@@ -80,4 +80,25 @@ class ClassifierExerciseApplicationTests {
                 .andExpect(jsonPath("$.classifications", hasSize(1)));
     }
 
+
+    @Test
+    void whenChangingSelectedClassification_thenReturnsOkAndIsUpdated() throws Exception {
+        int docId = 2;
+        String newLabel = "Medical";
+
+        mockMvc.perform(get("/classifications/2"))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+
+        mockMvc.perform(post("/classifications/" + docId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newLabel)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/classifications/2"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

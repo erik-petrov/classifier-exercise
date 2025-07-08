@@ -20,6 +20,7 @@ public class Document {
     private int id;
     private String name;
     private List<Score> scores = new ArrayList<>();
+    private String chosenClassificationId = "";
 
     public void addScore(Score score) {
         this.scores.add(score);

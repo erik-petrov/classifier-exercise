@@ -51,6 +51,15 @@ public class ScoreController {
     }
 
     /**
+     * POST request for changing chosen classification
+     * @return boolean
+     */
+    @PostMapping("/classifications/{id}")
+    public ResponseEntity<Boolean> changeChosenClassifier(@PathVariable int id, @RequestBody String label){
+        return ResponseEntity.ok(scoreService.changeSelectedClassification(id, label));
+    }
+
+    /**
      * PATCH request for updating Classifiers
      * @return boolean
      */

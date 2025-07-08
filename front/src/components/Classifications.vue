@@ -55,7 +55,9 @@
               </template>
               <template v-else>
                 {{ getMainClassification(doc).label }}
-                <span v-if="doc.edited" class="edited-badge">edited</span>
+                <span v-if="doc.edited || doc.chosenClassificationId !== ''" class="edited-badge"
+                  >edited</span
+                >
               </template>
             </td>
             <td>{{ Math.round(getMainClassification(doc).score * 100) }}%</td>
@@ -78,6 +80,7 @@ interface Classification {
 interface DocumentClassifications {
   id: number
   document_name: string
+  chosenClassificationId: string
   classifications: Classification[]
   edited?: boolean
 }
@@ -183,6 +186,7 @@ async function updateMainClassification(doc: DocumentClassifications, newLabel: 
   selected.score = temp
 
   doc.edited = true
+  doc.chosenClassificationId = selected.label
 
   mainClassificationLabel.value[doc.id] = newLabel
   editingDocId.value = null //unselect after change

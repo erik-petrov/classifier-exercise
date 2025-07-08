@@ -20,13 +20,11 @@ public class ScoreService {
     private final ScoreRepo scoreRepo;
     private final DocumentRepo documentRepo;
     private final ClassificationRepo classificationRepo;
-    private final CompositeUriComponentsContributor compositeUriComponentsContributor;
 
     public ScoreService(ScoreRepo scoreRepo, DocumentRepo documentRepo, ClassificationRepo classificationRepo, CompositeUriComponentsContributor compositeUriComponentsContributor) {
         this.scoreRepo = scoreRepo;
         this.documentRepo = documentRepo;
         this.classificationRepo = classificationRepo;
-        this.compositeUriComponentsContributor = compositeUriComponentsContributor;
     }
 
     public DocumentDTO getScoreById(int id) {
@@ -86,5 +84,9 @@ public class ScoreService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok(convertToDto(documentRepo.findById(id)));
+    }
+
+    public boolean changeSelectedClassification(int id, String label) {
+        return documentRepo.changeDocumentSelection(documentRepo.findById(id), label);
     }
 }
