@@ -27,6 +27,17 @@ public class DocumentRepo {
         return new ArrayList<>(docs.values());
     }
 
+    public void updateDoc(Document document, int id) {
+        Document oldDoc = docs.get(id);
+        oldDoc.setName(document.getName() != null ? document.getName() : oldDoc.getName());
+        oldDoc.setScores(document.getScores() != null ? document.getScores() : oldDoc.getScores());
+        docs.put(id, oldDoc);
+    }
+
+    public Document findById(int id){
+        return docs.get(id);
+    }
+
     public Optional<Document> findByName(String name){
         return docs.values().stream().filter(d -> d.getName().equals(name)).findFirst();
     }

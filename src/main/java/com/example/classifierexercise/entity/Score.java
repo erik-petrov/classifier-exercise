@@ -1,14 +1,19 @@
 package com.example.classifierexercise.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@NoArgsConstructor
 public class Score {
     private int id;
     private Document document;
     private Classification classification;
     private double score;
+
+    public Score(Document newDoc, Classification newCl, double score) {
+        document = newDoc;
+        classification = newCl;
+        this.score = score;
+    }
 }
