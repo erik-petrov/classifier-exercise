@@ -10,5 +10,5 @@ A simple coding challenge.
 
 ## Usage
 
-(localhost:8080) is the default backend.
-(localhost:80) will be your default frontend.
+https://localhost:8080 is the default backend.
+https://localhost:80 will be your default frontend.
